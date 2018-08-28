@@ -11,15 +11,19 @@ public class NewsItem {
     private String mWebURL;
     private String mSectionName;
     private String mDate;
-    public NewsItem (String title, String webURL, String sectionName, String date){
+    private String mAuthor;
+
+    public NewsItem (String title, String webURL, String sectionName, String date, String author){
         mTitle = title;
         mWebURL = webURL;
         mSectionName = sectionName;
         mDate = date;
+        mAuthor = author;
     }
     public String getTitle(){return mTitle;}
     public String getWebURL(){return mWebURL;}
     public String getSectionName(){return mSectionName;}
     public String getDate() {return mDate;}
+    public String getAuthor() {return mAuthor;}
 }
 

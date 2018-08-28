@@ -8,4 +8,48 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- style for news_item.xml -->
+    <style name="news_layout_text_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_weight">1</item>
+        </style>
+
+        <style name="news_date_text_view">
+            <item name="android:layout_width">88dp</item>
+            <item name="android:layout_height">50dp</item>
+            <item name="android:paddingLeft">16dp</item>
+        </style>
+
+        <style name="split_liner_layout">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">match_parent</item>
+            <item name="android:orientation">vertical</item>
+            <item name="android:paddingLeft">16dp</item>
+        </style>
+
+        <style name="head_liner_layout">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">200dp</item>
+            <item name="android:orientation">horizontal</item>
+        </style>
+        <!-- activity_show_news.xml layout-->
+    <style name="show_news_linear_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="show_news_text_view">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="show_news_list_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:fillViewport">true</item>
+    </style>
 </resources>

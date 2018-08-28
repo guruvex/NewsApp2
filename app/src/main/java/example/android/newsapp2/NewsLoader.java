@@ -26,11 +26,10 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
     public List<NewsItem> loadInBackground() {
         List<NewsItem> list = new ArrayList<NewsItem>();
 
-        Log.e("i am here","");
-
         HttpConnection getNews = new HttpConnection();
         String jsonString = "";
         try {
+            // hard coded url will be replaced with options.
             jsonString = getNews.makeHttpRequest(createUrl("http://content.guardianapis.com/search?show-tags=contributor&q=debates&api-key=a8fc710c-26a0-4c93-85b9-7319adb3f0b9"));
         } catch (IOException e) {
 
@@ -46,24 +45,29 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
             for (int i = 0; i < jsonDataArray.length(); i++) {
                 // pull out each item in the jason array one at a time.
                 JSONObject jsonItems = jsonDataArray.getJSONObject(i);
+
+                // dig down to author in json responce
+                JSONArray thirdLevel = jsonItems.getJSONArray("tags");
+
+                JSONObject jsonAuthor = thirdLevel.getJSONObject(0);
+
+
                 // pull the data to load in the objects.
                 String webTitle = jsonItems.optString("webTitle").toString();
                 String sectionName = jsonItems.optString("sectionName").toString();
                 String webUrl = jsonItems.optString("webUrl").toString();
                 String date = jsonItems.optString("webPublicationDate");
+                String author = jsonAuthor.optString("webTitle");
 
-                //JSONArray jsonThirdLevel = jsonDataArray.getJSONObject("tags");
-
+                // add info to string
+                author = "Author "+author;
                 // put them in the news item objects.
-                list.add(new NewsItem(webTitle, webUrl, sectionName, date));
+                list.add(new NewsItem(webTitle, webUrl, sectionName, date, author));
             }
             } catch (Exception e) {
             System.out.print(e);
         }
-        // this list under the line will go away.
-        //list.add(new NewsItem("emp1", "Brahma","",""));
-        //list.add(new NewsItem("emp2", "Vishnu","",""));
-        //list.add(new NewsItem("emp3", "Mahesh","",""));
+
         return list;
     }
     private URL createUrl(String stringUrl) {

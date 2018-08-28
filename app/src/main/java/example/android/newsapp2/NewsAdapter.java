@@ -29,10 +29,14 @@ public class NewsAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.news_layout, null);
         }
-        TextView empid = (TextView) view.findViewById(R.id.empid);
-        empid.setText(news.getTitle());
-        TextView empname = (TextView) view.findViewById(R.id.empname);
-        empname.setText(news.getWebURL());
+        TextView newsTitle = (TextView) view.findViewById(R.id.news_story_title);
+        newsTitle.setText(news.getTitle());
+        TextView newsCatagory = (TextView) view.findViewById(R.id.news_story_catagory);
+        newsCatagory.setText(news.getSectionName());
+        TextView newsDate = (TextView) view.findViewById(R.id.news_date);
+        newsDate.setText(news.getDate());
+        TextView newsAuthor = (TextView) view.findViewById(R.id.news_author);
+        newsAuthor.setText(news.getAuthor());
         return view;
     }
 
@@ -51,7 +55,7 @@ public class NewsAdapter extends BaseAdapter {
         return newsItems.size();
     }
 
-    public void setEmployees(List<NewsItem> data) {
+    public void setNews(List<NewsItem> data) {
         newsItems.addAll(data);
         notifyDataSetChanged();
     }
