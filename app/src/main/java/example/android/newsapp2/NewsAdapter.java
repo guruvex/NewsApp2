@@ -3,11 +3,15 @@ package example.android.newsapp2;
 import java.util.ArrayList;
 import java.util.List;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -25,7 +29,7 @@ public class NewsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        NewsItem news = (NewsItem) getItem(position);
+        final NewsItem news = (NewsItem) getItem(position);
         if (view == null) {
             view = inflater.inflate(R.layout.news_layout, null);
         }
@@ -37,6 +41,15 @@ public class NewsAdapter extends BaseAdapter {
         newsDate.setText(news.getDate());
         TextView newsAuthor = (TextView) view.findViewById(R.id.news_author);
         newsAuthor.setText(news.getAuthor());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(news.getWebURL()));
+                view.getContext().startActivity(openBrowser);
+            }
+        });
+
         return view;
     }
 

@@ -1,8 +1,10 @@
 package example.android.newsapp2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.ArrayList;
@@ -11,7 +13,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,8 +28,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         if(isConnected()) {
         newsAdapter = new NewsAdapter(this, new ArrayList<NewsItem>());
-        ListView employeeListView = (ListView) findViewById(R.id.employees);
-        employeeListView.setAdapter(newsAdapter);
+        ListView newsListView = (ListView) findViewById(R.id.employees);
+        newsListView.setAdapter(newsAdapter);
         getSupportLoaderManager().initLoader(1, null, this).forceLoad();
         } else{
             Toast.makeText(this,  "there is no interent connection", Toast.LENGTH_SHORT).show();
@@ -38,6 +42,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<List<NewsItem>> loader, List<NewsItem> data) {
         newsAdapter.setNews(data);
+
     }
     @Override
     public void onLoaderReset(Loader<List<NewsItem>> loader) {
