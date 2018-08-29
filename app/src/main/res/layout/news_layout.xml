@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/head_liner_layout">
 
-        <TextView
-            android:id="@+id/news_date"
-            style="@style/news_date_text_view" />
+    <TextView
+        android:id="@+id/news_date"
+        style="@style/news_date_text_view" />
 
-    <LinearLayout
-        style="@style/split_liner_layout">
+    <LinearLayout style="@style/split_liner_layout">
 
         <TextView
             android:id="@+id/news_story_catagory"
@@ -28,5 +25,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
-    <!-- style="@style/news_date_text_view"-->
