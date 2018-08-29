@@ -28,14 +28,14 @@ public class NewsAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.news_layout, null);
         }
-        TextView newsTitle = view.findViewById(R.id.news_story_title);
-        newsTitle.setText(news.getTitle());
-        TextView newsCatagory = view.findViewById(R.id.news_story_catagory);
-        newsCatagory.setText(news.getSectionName());
-        TextView newsDate = view.findViewById(R.id.news_date);
-        newsDate.setText(news.getDate());
-        TextView newsAuthor = view.findViewById(R.id.news_author);
-        newsAuthor.setText(news.getAuthor());
+        TextView newsTitleTextView = view.findViewById(R.id.news_story_title);
+        newsTitleTextView.setText(news.getTitle());
+        TextView newsCatagoryTextView = view.findViewById(R.id.news_story_catagory);
+        newsCatagoryTextView.setText(news.getSectionName());
+        TextView newsDateTextView = view.findViewById(R.id.news_date);
+        newsDateTextView.setText(news.getDate());
+        TextView newsAuthorTextView = view.findViewById(R.id.news_author);
+        newsAuthorTextView.setText(news.getAuthor());
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

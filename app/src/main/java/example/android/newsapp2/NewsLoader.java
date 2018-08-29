@@ -27,6 +27,9 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
         try {
             // hard coded url will be replaced with options.
             jsonString = getNews.makeHttpRequest(createUrl("http://content.guardianapis.com/search?show-tags=contributor&q=debates&api-key=a8fc710c-26a0-4c93-85b9-7319adb3f0b9"));
+            if (jsonString == "") {
+                return null;
+            }
         } catch (IOException e) {
             Log.d("hi","exception: "+e.getMessage());
             return null;

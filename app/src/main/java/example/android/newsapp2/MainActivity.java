@@ -9,7 +9,9 @@ import java.util.List;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -21,10 +23,15 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
     NewsAdapter newsAdapter;
+    TextView errorText;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        errorText = findViewById(R.id.error_text);
+        errorText.setVisibility(View.GONE);
+
         if(isConnected()) {
         newsAdapter = new NewsAdapter(this, new ArrayList<NewsItem>());
         ListView newsListView = (ListView) findViewById(R.id.employees);
@@ -32,6 +39,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         getSupportLoaderManager().initLoader(1, null, this).forceLoad();
         } else{
             Toast.makeText(this,  "there is no interent connection", Toast.LENGTH_SHORT).show();
+            errorText.setVisibility(View.VISIBLE);
         }
     }
     @Override
@@ -40,7 +48,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
     @Override
     public void onLoadFinished(Loader<List<NewsItem>> loader, List<NewsItem> data) {
-        newsAdapter.setNews(data);
+        if (data != null) {
+            newsAdapter.setNews(data);
+        }else{
+            errorText.setVisibility(View.VISIBLE);
+        }
     }
     @Override
     public void onLoaderReset(Loader<List<NewsItem>> loader) {
