@@ -1,6 +1,8 @@
 package example.android.newsapp2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,6 +11,10 @@ import java.util.List;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +27,7 @@ import android.widget.Toast;
  * https://www.concretepage.com/android/android-asynctaskloader-example-with-listview-and-baseadapter
  */
 
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
     NewsAdapter newsAdapter;
     TextView errorText;
 
@@ -31,6 +37,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         setContentView(R.layout.activity_main);
         errorText = findViewById(R.id.error_text);
         errorText.setVisibility(View.GONE);
+
+        Context context = getBaseContext();
+
+        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.settings_search_key),Context.MODE_PRIVATE);
+
+        String house = sharedPref.getString(getString(R.string.settings_search_key),getString(R.string.settings_search_default));
+
+
+        Log.v("value", house);
 
         if(isConnected()) {
         newsAdapter = new NewsAdapter(this, new ArrayList<NewsItem>());
@@ -75,5 +90,24 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

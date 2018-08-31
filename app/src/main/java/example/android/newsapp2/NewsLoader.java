@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import org.json.JSONArray;
@@ -16,17 +18,34 @@ import org.json.JSONObject;
  */
 
 public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
+
     public NewsLoader(Context context) {
         super(context);
     }
+
+
+//    Context context = getContext();
+//    SharedPreferences sharedPref = context.getSharedPreferences(getContext().getString(R.string.settings_search_key),Context.MODE_PRIVATE);
+
+//    String house = sharedPref.getString(getContext().getString(R.string.settings_search_key),getContext().getString(R.string.settings_search_default));
+
     @Override
     public List<NewsItem> loadInBackground() {
         List<NewsItem> list = new ArrayList<NewsItem>();
         HttpConnection getNews = new HttpConnection();
         String jsonString = "";
         try {
-            // hard coded url will be replaced with options.
-            jsonString = getNews.makeHttpRequest(createUrl("http://content.guardianapis.com/search?show-tags=contributor&q=debates&api-key=a8fc710c-26a0-4c93-85b9-7319adb3f0b9"));
+            // getString retrieves a String value from the preferences.
+            Context context = getContext();
+            SharedPreferences sharedPref = context.getSharedPreferences(getContext().getString(R.string.settings_search_key),Context.MODE_PRIVATE);
+            String newURL = sharedPref.getString(getContext().getString(R.string.settings_search_key),getContext().getString(R.string.settings_search_default));
+
+            Log.v("value", newURL);
+
+            URLBuilder buildURL = new URLBuilder();
+            String newURLString = buildURL.BuildURL(newURL);
+
+            jsonString = getNews.makeHttpRequest(createUrl(newURLString));
             if (jsonString == "") {
                 return null;
             }
