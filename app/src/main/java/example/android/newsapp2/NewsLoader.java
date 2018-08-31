@@ -38,6 +38,8 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
             // getString retrieves a String value from the preferences.
             Context context = getContext();
             SharedPreferences sharedPref = context.getSharedPreferences(getContext().getString(R.string.settings_search_key),Context.MODE_PRIVATE);
+
+            //todo  this line seems to only get the default string, not the current string.
             String newURL = sharedPref.getString(getContext().getString(R.string.settings_search_key),getContext().getString(R.string.settings_search_default));
 
             Log.v("value", newURL);
