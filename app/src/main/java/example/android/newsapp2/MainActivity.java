@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             newsListView.setAdapter(newsAdapter);
             getSupportLoaderManager().initLoader(1, null, this).forceLoad();
         } else {
-            Toast.makeText(this, "there is no interent connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             errorText.setVisibility(View.VISIBLE);
         }
     }

@@ -19,6 +19,9 @@ public class HttpConnection {
     public HttpConnection() {
     }
 
+    public static final int readTimeOut = 10000;
+    public static final int connectTimeOut = 15000;
+
     public String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
         HttpURLConnection urlConnection = null;
@@ -26,10 +29,12 @@ public class HttpConnection {
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(10000);
-            urlConnection.setConnectTimeout(15000);
+            urlConnection.setReadTimeout(readTimeOut);
+            urlConnection.setConnectTimeout(connectTimeOut);
             urlConnection.connect();
-            inputStream = urlConnection.getInputStream();
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                inputStream = urlConnection.getInputStream();
+            }
             jsonResponse = convertStreamToString(inputStream);
         } catch (IOException e) {
             //handle the exception
