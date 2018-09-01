@@ -2,17 +2,14 @@ package example.android.newsapp2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,45 +34,39 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         errorText = findViewById(R.id.error_text);
         errorText.setVisibility(View.GONE);
-
-        Context context = getBaseContext();
-
-        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.settings_search_key),Context.MODE_PRIVATE);
-
-        String house = sharedPref.getString(getString(R.string.settings_search_key),getString(R.string.settings_search_default));
-
-
-        Log.v("value", house);
-
-        if(isConnected()) {
-        newsAdapter = new NewsAdapter(this, new ArrayList<NewsItem>());
-        ListView newsListView = (ListView) findViewById(R.id.employees);
-        newsListView.setAdapter(newsAdapter);
-        getSupportLoaderManager().initLoader(1, null, this).forceLoad();
-        } else{
-            Toast.makeText(this,  "there is no interent connection", Toast.LENGTH_SHORT).show();
+        if (isConnected()) {
+            newsAdapter = new NewsAdapter(this, new ArrayList<NewsItem>());
+            ListView newsListView = (ListView) findViewById(R.id.employees);
+            newsListView.setAdapter(newsAdapter);
+            getSupportLoaderManager().initLoader(1, null, this).forceLoad();
+        } else {
+            Toast.makeText(this, "there is no interent connection", Toast.LENGTH_SHORT).show();
             errorText.setVisibility(View.VISIBLE);
         }
     }
+
     @Override
     public Loader<List<NewsItem>> onCreateLoader(int id, Bundle args) {
         return new NewsLoader(MainActivity.this);
     }
+
     @Override
     public void onLoadFinished(Loader<List<NewsItem>> loader, List<NewsItem> data) {
         if (data != null) {
             newsAdapter.setNews(data);
-        }else{
+        } else {
             errorText.setVisibility(View.VISIBLE);
         }
     }
+
     @Override
     public void onLoaderReset(Loader<List<NewsItem>> loader) {
         newsAdapter.setNews(new ArrayList<NewsItem>());
     }
+
     /**
      * check for network
-     * */
+     */
     private boolean isConnected() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;

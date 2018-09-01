@@ -18,10 +18,12 @@ import android.widget.TextView;
 public class NewsAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<NewsItem> newsItems = new ArrayList<>();
+
     public NewsAdapter(Context context, List<NewsItem> news) {
         this.newsItems = news;
         inflater = LayoutInflater.from(context);
     }
+
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         final NewsItem news = (NewsItem) getItem(position);
@@ -45,18 +47,22 @@ public class NewsAdapter extends BaseAdapter {
         });
         return view;
     }
+
     @Override
     public Object getItem(int position) {
         return newsItems.get(position);
     }
+
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public int getCount() {
         return newsItems.size();
     }
+
     public void setNews(List<NewsItem> data) {
         newsItems.addAll(data);
         notifyDataSetChanged();
